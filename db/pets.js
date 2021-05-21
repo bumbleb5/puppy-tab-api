@@ -1,7 +1,9 @@
 const knex = require('./knex');
+const petProcessor = require('../domain/addPet.domain');
 
 function createPet(pet) {
-    return knex('pets').insert(pet);
+    const newPet = petProcessor(pet);
+    return knex('pets').insert(newPet);
 }
 
 function getAllPets() {
@@ -17,7 +19,8 @@ function deletePet(id) {
 }
 
 function updatePet(id, pet) {
-    return knex('pets').where('id', id).update(pet);
+    const updatedPet = petProcessor(pet);
+    return knex('pets').where('id', id).update(updatedPet);
 }
 
 module.exports = {

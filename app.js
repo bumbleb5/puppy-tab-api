@@ -3,7 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var db = require('./db/pets');
+var petRepository = require('./db/pets');
+var eventRepository = require('./db/events');
 var bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
@@ -30,22 +31,26 @@ app.use('/testAPI', testAPIRouter);
 //app.use(express.static('public'));
 
 app.post('/pets', async (req, res) => {
-    const results = await db.createPet(req.body);
+    const results = await petRepository.createPet(req.body);
     res.status(201).json(results[0]);
 });
 
 app.get('/pets/:id', async (req, res) => {
     const { id } = req.params;
     // const id = req.params.id; same ^^^
-    const pet = await db.getPet(id);
+    const pet = await petRepository.getPet(id);
     res.status(200).json(pet);
 });
 
 app.get('/pets', async (req, res) => {
-    const results = await db.getAllPets();
+    const results = await petRepository.getAllPets();
     res.status(200).json(results);
-})
+});
 
+app.post('/events', async (req, res) => {
+    const results = await eventRepository.createEvent(req.body);
+    res.status(201).json(results[0]);
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
