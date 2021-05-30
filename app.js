@@ -30,6 +30,8 @@ app.use('/testAPI', testAPIRouter);
 //app.use('/pets', petsRouter);
 //app.use(express.static('public'));
 
+// PETS
+
 app.post('/pets', async (req, res) => {
     const results = await petRepository.createPet(req.body);
     res.status(201).json(results[0]);
@@ -39,7 +41,7 @@ app.get('/pets/:id', async (req, res) => {
     const { id } = req.params;
     // const id = req.params.id; same ^^^
     const pet = await petRepository.getPet(id);
-    res.status(200).json(pet);
+    res.status(200).json(pet[0]);
 });
 
 app.get('/pets', async (req, res) => {
@@ -47,9 +49,22 @@ app.get('/pets', async (req, res) => {
     res.status(200).json(results);
 });
 
+// EVENTS
+
 app.post('/events', async (req, res) => {
     const results = await eventRepository.createEvent(req.body);
     res.status(201).json(results[0]);
+});
+
+app.get('/pets/:petId/events', async (req, res) => {
+    const results = await eventRepository.getAllPetEvents(req.params.petId);
+    res.status(200).json(results);
+});
+
+app.get('/events/:eventId', async (req, res) => {
+    const { id } = req.params;
+    const results = await eventRepository.getEvent(id);
+    res.status(200).json(results[0]);
 });
 
 // catch 404 and forward to error handler

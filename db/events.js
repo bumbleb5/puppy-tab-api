@@ -18,6 +18,16 @@ function createEvent(event) {
     return knex('events').insert(event);
 }
 
+function getAllPetEvents(petId) {
+    return knex('events').select('*').where('petId', petId);
+}
+
+function getEvent(eventId) {
+    return knex('events').select('*').where('eventId', eventId);
+}
+
 module.exports = {
-    createEvent
+    createEvent,
+    getAllPetEvents,
+    getEvent
 };
