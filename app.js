@@ -62,8 +62,9 @@ app.get('/pets/:petId/events', async (req, res) => {
 });
 
 app.get('/events/:eventId', async (req, res) => {
-    const { id } = req.params;
-    const results = await eventRepository.getEvent(id);
+    // deconstructed assignment
+    const { eventId } = req.params;
+    const results = await eventRepository.getEvent(eventId);
     res.status(200).json(results[0]);
 });
 
