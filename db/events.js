@@ -11,6 +11,7 @@ class Event {
     eventNotes;
     totalPrice;
     providerName;
+    medication;
 }
 
 function createEvent(event) {
